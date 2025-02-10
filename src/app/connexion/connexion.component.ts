@@ -21,7 +21,7 @@ export class ConnexionComponent {
     });
   }
 
-  // Accès facile aux champs du formulaire
+  // Accès aux champs du formulaire
   get f() { return this.loginForm.controls; }
 
   // Méthode pour soumettre le formulaire
