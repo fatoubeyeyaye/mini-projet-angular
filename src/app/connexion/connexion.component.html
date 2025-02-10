@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="login-form">
+      <h2 class="text-center mb-4">Formulaire de connexion</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Nom d'utilisateur</label>
+          <input type="text" class="form-control" id="username" formControlName="username" />
+          <div *ngIf="f['username']?.invalid && (f['username']?.touched || submitted)" class="error">
+            Le nom d'utilisateur est requis et doit comporter au moins 4 caractères.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" class="form-control" id="password" formControlName="password" />
+          <div *ngIf="f['password']?.invalid && (f['password']?.touched || submitted)" class="error">
+            Le mot de passe est requis et doit comporter au moins 6 caractères.
+          </div>
+        </div>
+  
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+      </form>
+  
+      <!-- Affichage du résumé des informations -->
+      <div *ngIf="userData" class="mt-4">
+        <h3>Résumé des informations :</h3>
+        <p><strong>Nom d'utilisateur :</strong> {{ userData.username }}</p>
+        <p><strong>Mot de passe :</strong> {{ userData.password }}</p>
+      </div>
+    </div>
+  </div>
+  
