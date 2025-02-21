@@ -1,34 +1,39 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // Importez ReactiveFormsModule ici
-import { CommonModule } from '@angular/common'; // Importez CommonModule ici pour *ngIf
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-connexion',
-  standalone: true, // Assurez-vous que ce composant est autonome
+  standalone: true,
   templateUrl: './connexion.component.html',
   styleUrls: ['./connexion.component.css'],
-  imports: [ReactiveFormsModule, CommonModule] // Ajoutez les deux modules ici
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class ConnexionComponent {
   loginForm: FormGroup;
   submitted = false;
-  userData: any;
+  errorMessage: string | null = null;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  // Accès aux champs du formulaire
   get f() { return this.loginForm.controls; }
 
-  // Méthode pour soumettre le formulaire
   onSubmit() {
     this.submitted = true;
+    this.errorMessage = null;
+
     if (this.loginForm.valid) {
-      this.userData = this.loginForm.value;
+      const userData = this.loginForm.value;
+      localStorage.setItem('userData', JSON.stringify(userData));
+      this.router.navigate(['/accueil']); // Redirige vers la page Accueil
+    } else {
+      this.errorMessage = "Nom d'utilisateur ou mot de passe invalide.";
     }
   }
 }

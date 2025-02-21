@@ -1,0 +1,8 @@
+<div *ngIf="userData; else noData">
+  <h2>Bienvenu dans la page d'Accueil avec les informations de l'utilisateur</h2>
+  <p><strong>Nom d'utilisateur :</strong> {{ userData.username }}</p>
+  <p><strong>Mot de passe :</strong> {{ userData.password }}</p>
+</div>
+
+<ng-template #noData>
+</ng-template>

@@ -1,6 +1,16 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { provideRouter, Route } from '@angular/router';
+import { ConnexionComponent } from './app/connexion/connexion.component';
+import { AccueilComponent } from './app/accueil/accueil.component';
+import { AuthGuard } from './app/auth.guard';  
 import { AppComponent } from './app/app.component';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+const routes: Route[] = [
+  { path: '', redirectTo: '/connexion', pathMatch: 'full' },
+  { path: 'connexion', component: ConnexionComponent },
+  { path: 'accueil', component: AccueilComponent, canActivate: [AuthGuard] }
+];
+
+bootstrapApplication(AppComponent, {
+  providers: [provideRouter(routes)]
+});
